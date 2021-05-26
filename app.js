@@ -51,7 +51,7 @@ app.use(express.urlencoded({ extended: false }));
 // }))
 
 app.use(passport.initialize())
-// app.use(passport.session())
+// app.use(passport.session()) 
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
