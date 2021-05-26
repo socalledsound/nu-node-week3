@@ -7,7 +7,9 @@ const campsiteRouter = express.Router();
 campsiteRouter.route('/')
 .get((req, res, next) => {
     Campsite.find()
-    .populate('comments.author')
+    .populate('comments.author').exec((err, author) => {
+        console.log(author)
+    })
     .then(campsites => {
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
