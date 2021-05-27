@@ -7,10 +7,9 @@ const campsiteRouter = express.Router();
 campsiteRouter.route('/')
 .get((req, res, next) => {
     Campsite.find()
-    .populate('comments.author').exec((err, author) => {
-        console.log(author)
-    })
+    .populate('comments.author')
     .then(campsites => {
+        console.log(campsites)
         res.statusCode = 200;
         res.setHeader('Content-Type', 'application/json');
         res.json(campsites);
@@ -98,6 +97,7 @@ campsiteRouter.route('/:campsiteId/comments')
     Campsite.findById(req.params.campsiteId)
     .then(campsite => {
         if (campsite) {
+            req.body.author = req.user.id
             campsite.comments.push(req.body);
             campsite.save()
             .then(campsite => {
